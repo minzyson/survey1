@@ -5,76 +5,114 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>6월 3주차 AI멘토링 스터디 일시 수요조사</title>
   <style>
-    :root{
-      --cream:#f2f0eb;
-      --ceramic:#edebe9;
-      --starbucks:#006241;
-      --green-accent:#00754A;
-      --house-green:#1E3932;
-      --green-light:#d4e9e2;
-      --text-black:rgba(0,0,0,0.87);
+    :root {
+      --bg: #0f1f21;
+      --panel: rgba(255,255,255,0.97);
+      --panel-2: #ffffff;
+      --primary: #4dc785;
+      --primary-dark: #1f6d54;
+      --accent: #00bfa5;
+      --surface: rgba(255,255,255,0.88);
+      --text: #111817;
+      --muted: rgba(17,24,23,0.66);
     }
-    html,body{height:100%}
-    body{font-family:SoDoSans, "Helvetica Neue", Helvetica, Arial, sans-serif;margin:0;background:var(--cream);color:var(--text-black);-webkit-font-smoothing:antialiased}
-    .container{max-width:960px;margin:32px auto;padding:28px;background:#ffffff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.08)}
-    h1{font-size:24px;color:var(--starbucks);margin:0 0 8px}
-    p.lead{margin:0 0 18px;color:rgba(0,0,0,0.66)}
+    *{box-sizing:border-box}
+    html, body{min-height:100%;margin:0;padding:0;background:radial-gradient(circle at top left, rgba(77,199,133,0.22), transparent 35%), #0f1f21;color:#fff;font-family:Inter, "Helvetica Neue", Arial, sans-serif;}
+    body{overflow-x:hidden;}
+    button{font:inherit}
+    .page{padding:36px 20px 60px;max-width:1100px;margin:0 auto}
+    .hero{display:grid;gap:20px;padding:40px 36px 34px;border-radius:32px;background:linear-gradient(180deg, rgba(16,47,47,0.96), rgba(9,25,25,0.96));box-shadow:0 24px 80px rgba(0,0,0,0.24);}
+    .hero-top{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap}
+    .eyebrow{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;border-radius:999px;background:rgba(255,255,255,0.08);font-size:13px;text-transform:uppercase;letter-spacing:.16em;color:#b7f3d0}
+    .eyebrow span{width:8px;height:8px;border-radius:50%;background:#4dc785;display:inline-block}
+    .hero-title{font-size:clamp(2.6rem,3.4vw,4.4rem);line-height:1.02;margin:0;letter-spacing:-0.03em;max-width:640px}
+    .hero-copy{max-width:640px;font-size:1rem;line-height:1.8;color:rgba(255,255,255,0.82)}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px}
+    .hero-button{padding:16px 24px;border-radius:999px;border:0;background:linear-gradient(135deg,#4dc785 0%,#00bfa5 100%);color:#06120f;font-weight:700;cursor:pointer;transition:transform .18s ease,box-shadow .18s ease;box-shadow:0 18px 40px rgba(0,191,165,0.28)}
+    .hero-button:hover{transform:translateY(-2px);box-shadow:0 22px 46px rgba(0,191,165,0.32)}
+    .hero-note{font-size:0.95rem;color:rgba(255,255,255,0.72)}
 
-    /* Names list as full-pill buttons */
-    .names{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:18px}
-    .name-btn{background:transparent;border:1px solid rgba(0,0,0,0.12);padding:10px 18px;border-radius:50px;font-size:14px;cursor:pointer;transition:all .12s ease}
-    .name-btn.active{background:var(--green-accent);color:#fff;border-color:var(--green-accent);transform:scale(0.99)}
+    .panel{margin-top:28px;display:grid;gap:22px}
+    .card{background:var(--panel);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.12);border-radius:28px;box-shadow:0 20px 60px rgba(0,0,0,0.16);padding:26px}
+    .card-title{display:flex;align-items:center;gap:12px;margin:0 0 18px;font-size:1rem;font-weight:700;color:var(--text)}
+    .badge{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:#06120f;color:#a8f5d0;font-weight:700;font-size:0.95rem;flex-shrink:0}
+    .card-subtitle{margin:0;color:rgba(17,24,23,0.74);line-height:1.75}
 
-    /* Date option pills */
-    .date-options{display:flex;gap:12px;margin-bottom:6px}
-    .date-btn{padding:12px 18px;border-radius:50px;border:1px solid rgba(0,0,0,0.08);background:#fff;cursor:pointer}
-    .date-btn.active{background:var(--starbucks);color:#fff;border-color:var(--starbucks);box-shadow:0 4px 10px rgba(0,0,0,0.08)}
+    .names{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:8px}
+    .name-btn, .date-btn{border:none;padding:16px 18px;border-radius:999px;font-size:0.96rem;font-weight:700;cursor:pointer;transition:transform .16s ease,background .16s ease,color .16s ease;min-height:56px}
+    .name-btn{background:rgba(255,255,255,0.95);color:#06120f}
+    .name-btn:hover,.date-btn:hover{transform:translateY(-1px)}
+    .name-btn.active{background:#4dc785;color:#06120f;box-shadow:0 12px 30px rgba(0,0,0,0.14)}
+    .date-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-top:8px}
+    .date-btn{background:rgba(255,255,255,0.95);color:#06120f}
+    .date-btn.active{background:linear-gradient(135deg,#4dc785 0%,#00bfa5 100%);color:#06120f;box-shadow:0 16px 32px rgba(0,0,0,0.18)}
+    .help{margin-top:12px;font-size:0.92rem;color:rgba(17,24,23,0.72)}
 
-    /* Results table */
-    table{border-collapse:collapse;width:100%;background:#fff;margin-top:18px}
-    th,td{border-bottom:1px solid #eee;padding:12px 10px;text-align:left}
-    thead th{background:var(--ceramic);color:var(--house-green);font-weight:600}
+    .results{overflow-x:auto;margin-top:16px}
+    table{width:100%;border-collapse:separate;border-spacing:0;background:#ffffff}
+    th, td{padding:16px 14px;text-align:left}
+    thead th{background:#f0faf4;color:#0f1f21;font-size:0.92rem;text-transform:uppercase;letter-spacing:0.12em;font-weight:700}
+    tbody tr{border-bottom:1px solid rgba(15,25,33,0.08)}
+    td{color:#0f1f21;font-size:0.96rem}
+    .conclusion{margin-top:20px;padding:18px 20px;border-radius:20px;background:#eaf8ef;color:#0f1f21;font-weight:700}
 
-    .conclusion{margin-top:14px;padding:12px;border-radius:10px;background:var(--green-light);color:var(--house-green);font-weight:600}
-
-    .meta{display:flex;justify-content:space-between;align-items:center;gap:12px}
-    .help{font-size:13px;color:rgba(0,0,0,0.6)}
-    /* Sections */
-    .section{padding:16px 0;border-top:1px solid #f1efe9;margin-top:18px}
-    .section:first-of-type{border-top:0;margin-top:6px}
-    .section h3{margin:0 0 10px;font-size:15px;color:var(--house-green);display:flex;align-items:center;gap:10px}
-    .badge{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--green-accent);color:#fff;font-weight:700;font-size:13px}
+    @media (max-width: 760px) {
+      .hero{padding:28px 24px}
+      .hero-top{gap:16px}
+      .page{padding:24px 16px 40px}
+      .card{padding:22px}
+      .name-btn, .date-btn{min-height:50px}
+    }
   </style>
 </head>
 <body>
-  <h1>6월 3주차 AI멘토링 스터디 일시 수요조사</h1>
-  <p>성명과 가능한 일시를 선택하세요. 선택 즉시 하단에 결과가 표시됩니다.</p>
+  <div class="page">
+    <section class="hero">
+      <div class="hero-top">
+        <span class="eyebrow"><span></span>AI 멘토링 스터디</span>
+        <div class="hero-info">
+          <p class="hero-title">6월 3주차 스터디 일정 수요조사</p>
+          <p class="hero-copy">간단한 세 단계로 일정을 정하고, 즉시 결과를 확인하세요. 구성원의 선택을 한눈에 보면서 모두 가능한 날짜를 빠르게 찾아드립니다.</p>
+        </div>
+      </div>
+      <div class="hero-actions">
+        <button class="hero-button" type="button" onclick="document.getElementById('section-names').scrollIntoView({behavior:'smooth'})">참여하기</button>
+      </div>
+      <p class="hero-note">이 페이지는 깔끔한 디자인과 실시간 응답 현황을 지원합니다.</p>
+    </section>
 
-  <div class="container">
-    <h1>6월 3주차 AI멘토링 스터디 일시 수요조사</h1>
-    <p class="lead">아래 이름을 클릭한 뒤, 오른쪽 일시에서 가능한 날짜를 선택하세요. 선택 즉시 응답 현황과 최종 가능일이 업데이트됩니다.</p>
+    <main class="panel">
+      <section class="card" id="section-names">
+        <div class="card-title"><span class="badge">1</span> 성명 선택</div>
+        <p class="card-subtitle">참여자의 이름을 선택하면 해당 인원이 입력한 일정이 표시됩니다.</p>
+        <div class="names" id="names"></div>
+      </section>
 
-    <div class="section" id="section-names">
-      <h3><span class="badge">1</span> 성명 선택</h3>
-      <div class="names" id="names"></div>
-    </div>
+      <section class="card" id="section-dates">
+        <div class="card-title"><span class="badge">2</span> 일시 선택</div>
+        <p class="card-subtitle">선택한 참여자의 가능한 날짜를 체크하거나 취소하세요.</p>
+        <div class="date-options" id="dateOptions"></div>
+        <div class="help">하나의 참여자에 대해 최대 3일 모두 선택 가능합니다.</div>
+      </section>
 
-    <div class="section" id="section-dates">
-      <h3><span class="badge">2</span> 일시 선택</h3>
-      <div class="date-options" id="dateOptions"></div>
-      <div class="help">선택된 사람의 가능일만 변경됩니다.</div>
-    </div>
-
-    <div class="section" id="section-results">
-      <h3><span class="badge">3</span> 응답현황</h3>
-      <table id="resultsTable">
-        <thead>
-          <tr><th>성명</th><th>가능 일시</th></tr>
-        </thead>
-        <tbody></tbody>
-      </table>
-      <div id="conclusion" class="conclusion" style="display:none"></div>
-    </div>
+      <section class="card" id="section-results">
+        <div class="card-title"><span class="badge">3</span> 응답현황</div>
+        <p class="card-subtitle">현재까지 입력된 각 참여자의 가능일과 모두 가능한 날짜를 확인할 수 있습니다.</p>
+        <div class="results">
+          <table id="resultsTable">
+            <thead>
+              <tr><th>성명</th><th>가능 일시</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div id="conclusion" class="conclusion" style="display:none"></div>
+        <div style="margin-top:18px;display:flex;flex-wrap:wrap;gap:12px;align-items:center">
+          <button class="hero-button" type="button" onclick="sendToSheet()" style="background:#ffffff;color:#06120f;box-shadow:0 12px 30px rgba(0,0,0,0.14);">Google Sheets 저장</button>
+          <span id="sheetStatus" style="color:rgba(255,255,255,0.84);font-size:0.95rem"></span>
+        </div>
+      </section>
+    </main>
   </div>
 
   <script>
@@ -92,11 +130,39 @@
       '6월17일(수)'
     ];
 
+    const sheetsEndpoint = 'https://script.google.com/macros/s/AKfycbzx-0hzYskv1asw2WJXKumVCjfJbWVrePnO5-5it3VCZwsV6QRtxiYVXIAdruWibTH_8w/exec';
     // 상태: { name: Set(selectedDates) }
     const state = {};
     names.forEach(n => state[n] = new Set());
 
     let currentName = names[0];
+
+    async function sendToSheet() {
+      const status = document.getElementById('sheetStatus');
+      const dates = Array.from(state[currentName]);
+      if (!currentName) {
+        status.textContent = '저장할 이름을 선택해주세요.';
+        return;
+      }
+      status.textContent = '저장 중...';
+      try {
+        const response = await fetch(sheetsEndpoint, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ name: currentName, dates })
+        });
+        const result = await response.json();
+        if (result.success) {
+          status.textContent = currentName + '님의 선택이 Google Sheets에 저장되었습니다.';
+        } else {
+          status.textContent = '저장 실패: ' + (result.error || '응답이 유효하지 않습니다.');
+        }
+      } catch (error) {
+        status.textContent = '저장 실패: ' + error.message;
+      }
+    }
 
     function renderNames(){
       const container = document.getElementById('names');
