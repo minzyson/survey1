@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>6월 3주차 AI멘토링 스터디 일시 수요조사</title>
+  <style>
+    :root{
+      --cream:#f2f0eb;
+      --ceramic:#edebe9;
+      --starbucks:#006241;
+      --green-accent:#00754A;
+      --house-green:#1E3932;
+      --green-light:#d4e9e2;
+      --text-black:rgba(0,0,0,0.87);
+    }
+    html,body{height:100%}
+    body{font-family:SoDoSans, "Helvetica Neue", Helvetica, Arial, sans-serif;margin:0;background:var(--cream);color:var(--text-black);-webkit-font-smoothing:antialiased}
+    .container{max-width:960px;margin:32px auto;padding:28px;background:#ffffff;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.08)}
+    h1{font-size:24px;color:var(--starbucks);margin:0 0 8px}
+    p.lead{margin:0 0 18px;color:rgba(0,0,0,0.66)}
+
+    /* Names list as full-pill buttons */
+    .names{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:18px}
+    .name-btn{background:transparent;border:1px solid rgba(0,0,0,0.12);padding:10px 18px;border-radius:50px;font-size:14px;cursor:pointer;transition:all .12s ease}
+    .name-btn.active{background:var(--green-accent);color:#fff;border-color:var(--green-accent);transform:scale(0.99)}
+
+    /* Date option pills */
+    .date-options{display:flex;gap:12px;margin-bottom:6px}
+    .date-btn{padding:12px 18px;border-radius:50px;border:1px solid rgba(0,0,0,0.08);background:#fff;cursor:pointer}
+    .date-btn.active{background:var(--starbucks);color:#fff;border-color:var(--starbucks);box-shadow:0 4px 10px rgba(0,0,0,0.08)}
+
+    /* Results table */
+    table{border-collapse:collapse;width:100%;background:#fff;margin-top:18px}
+    th,td{border-bottom:1px solid #eee;padding:12px 10px;text-align:left}
+    thead th{background:var(--ceramic);color:var(--house-green);font-weight:600}
+
+    .conclusion{margin-top:14px;padding:12px;border-radius:10px;background:var(--green-light);color:var(--house-green);font-weight:600}
+
+    .meta{display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .help{font-size:13px;color:rgba(0,0,0,0.6)}
+    /* Sections */
+    .section{padding:16px 0;border-top:1px solid #f1efe9;margin-top:18px}
+    .section:first-of-type{border-top:0;margin-top:6px}
+    .section h3{margin:0 0 10px;font-size:15px;color:var(--house-green);display:flex;align-items:center;gap:10px}
+    .badge{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--green-accent);color:#fff;font-weight:700;font-size:13px}
+  </style>
+</head>
+<body>
+  <h1>6월 3주차 AI멘토링 스터디 일시 수요조사</h1>
+  <p>성명과 가능한 일시를 선택하세요. 선택 즉시 하단에 결과가 표시됩니다.</p>
+
+  <div class="container">
+    <h1>6월 3주차 AI멘토링 스터디 일시 수요조사</h1>
+    <p class="lead">아래 이름을 클릭한 뒤, 오른쪽 일시에서 가능한 날짜를 선택하세요. 선택 즉시 응답 현황과 최종 가능일이 업데이트됩니다.</p>
+
+    <div class="section" id="section-names">
+      <h3><span class="badge">1</span> 성명 선택</h3>
+      <div class="names" id="names"></div>
+    </div>
+
+    <div class="section" id="section-dates">
+      <h3><span class="badge">2</span> 일시 선택</h3>
+      <div class="date-options" id="dateOptions"></div>
+      <div class="help">선택된 사람의 가능일만 변경됩니다.</div>
+    </div>
+
+    <div class="section" id="section-results">
+      <h3><span class="badge">3</span> 응답현황</h3>
+      <table id="resultsTable">
+        <thead>
+          <tr><th>성명</th><th>가능 일시</th></tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div id="conclusion" class="conclusion" style="display:none"></div>
+    </div>
+  </div>
+
+  <script>
+    const names = [
+      '이상용팀장님',
+      '정성민팀장님',
+      '황세원차장님',
+      '박건희차장님',
+      '손민지'
+    ];
+
+    const dates = [
+      '6월15일(월)',
+      '6월16일(화)',
+      '6월17일(수)'
+    ];
+
+    // 상태: { name: Set(selectedDates) }
+    const state = {};
+    names.forEach(n => state[n] = new Set());
+
+    let currentName = names[0];
+
+    function renderNames(){
+      const container = document.getElementById('names');
+      container.innerHTML = '';
+      names.forEach(name => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'name-btn' + (name === currentName ? ' active' : '');
+        btn.textContent = name;
+        btn.addEventListener('click', () => {
+          currentName = name;
+          renderNames();
+          renderDateOptions();
+        });
+        container.appendChild(btn);
+      });
+    }
+
+    function renderDateOptions(){
+      const container = document.getElementById('dateOptions');
+      container.innerHTML = '';
+      dates.forEach(date => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'date-btn' + (state[currentName].has(date) ? ' active' : '');
+        btn.textContent = date;
+        btn.dataset.date = date;
+        btn.addEventListener('click', () => {
+          if(state[currentName].has(date)) state[currentName].delete(date);
+          else state[currentName].add(date);
+          renderDateOptions();
+          updateResults();
+        });
+        container.appendChild(btn);
+      });
+    }
+
+    function updateResults(){
+      const tbody = document.querySelector('#resultsTable tbody');
+      tbody.innerHTML = '';
+      names.forEach(name => {
+        const tr = document.createElement('tr');
+        const tdName = document.createElement('td');
+        tdName.textContent = name;
+        const tdSel = document.createElement('td');
+        const arr = Array.from(state[name]);
+        tdSel.textContent = arr.length ? arr.join(', ') : '선택 없음';
+        tr.appendChild(tdName);
+        tr.appendChild(tdSel);
+        tbody.appendChild(tr);
+      });
+
+      computeConclusion();
+    }
+
+    function computeConclusion(){
+      const allSets = names.map(n => state[n]);
+      let common = new Set(dates);
+      allSets.forEach(s => {
+        common = new Set([...common].filter(d => s.has(d)));
+      });
+
+      const conclusionEl = document.getElementById('conclusion');
+      conclusionEl.style.display = 'block';
+      if(common.size > 0){
+        conclusionEl.textContent = '모두 가능한 날: ' + Array.from(common).join(', ');
+      } else {
+        conclusionEl.textContent = '모두 가능한 날이 없습니다.';
+      }
+    }
+
+    // 초기 렌더
+    renderNames();
+    renderDateOptions();
+    updateResults();
+  </script>
+</body>
+</html>
